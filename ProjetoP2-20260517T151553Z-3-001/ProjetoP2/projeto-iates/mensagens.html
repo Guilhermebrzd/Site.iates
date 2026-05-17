@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxo - Mensagens Recebidas</title>
+    <link rel="shortcut icon" href="images/barco2.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/default.css" />
+    <style>
+      /* Estilização para deixar a tabela elegante e condizente com o tema */
+      .table-container {
+        margin: 30px auto;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        color: #333;
+        font-family: sans-serif;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #0d2636; /* Tom azul escuro combinando com náutica */
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      /* Caso não haja mensagens */
+      .no-messages {
+        text-align: center;
+        color: #777;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+    <header>
+      <div id="title">
+        <img src="images/barco1.png" alt="ícone de barco" />
+        <div class="headtitle">
+          <h1>Luxo</h1>
+          <h2>Aluguel de iates</h2>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="navmenu">
+          <li><a href="index.html">Página inicial</a></li>
+          <li><a href="aluguel.html">Aluguel de iates</a></li>
+          <li><a href="destinos.html">Destinos</a></li>
+          <li><a href="tripulacao.html">Tripulação</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="pagtitle">
+        <div class="bgtitle"></div>
+        <h2>Mensagens Recebidas</h2>
+      </div>
+
+      <!-- Container da Tabela Dinâmica -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Mensagem</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-mensagens">
+            <!-- As linhas com as mensagens serão inseridas aqui pelo jQuery -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="buttons">
+        <a href="admin.html" class="button" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;">Sair</a>
+      </div>
+    </main>
+    </div>
+
+    <footer>
+      <p>© 2023 por Luxo aluguel de iates</p>
+    </footer>
+
+    <!-- ======================================================== -->
+    <!-- IMPLEMENTAÇÃO: Renderização Dinâmica das Mensagens        -->
+    <!-- ======================================================== -->
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script src="js/api.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          // 1. Executa a função da api.js que retorna o Array de mensagens
+          var listaMensagens = obterMensagens();
+
+          // 2. Seleciona o corpo da tabela onde vamos injetar as linhas
+          var $corpoTabela = $('#tabela-mensagens');
+
+          // Limpa qualquer conteúdo pré-existente por segurança
+          $corpoTabela.empty();
+
+          // 3. Verifica se existem mensagens cadastradas
+          if (listaMensagens && listaMensagens.length > 0) {
+              
+              // Percorre o Array de objetos
+              listaMensagens.forEach(function(item) {
+                  // Cria a estrutura da linha HTML preenchendo com as propriedades do objeto
+                  var linhaHTML = '<tr>' +
+                                      '<td>' + item.nome + '</td>' +
+                                      '<td>' + item.email + '</td>' +
+                                      '<td>' + item.mensagem + '</td>' +
+                                  '</tr>';
+                  
+                  // Injeta a linha criada no final do tbody da tabela
+                  $corpoTabela.append(linhaHTML);
+              });
+
+          } else {
+              // Exibe um aviso amigável caso o array esteja vazio
+              $corpoTabela.append('<tr><td colspan="3" class="no-messages">Nenhuma mensagem recebida até o momento.</td></tr>');
+          }
+      });
+    </script>
+  </body>
+</html>
