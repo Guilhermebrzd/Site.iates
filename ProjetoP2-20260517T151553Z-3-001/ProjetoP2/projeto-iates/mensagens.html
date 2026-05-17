@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxo - Mensagens Recebidas</title>
+    <link rel="shortcut icon" href="images/barco2.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/default.css" />
+    <style>
+      
+      .table-container {
+        margin: 30px auto;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        color: #333;
+        font-family: sans-serif;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #0d2636; 
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      
+      .no-messages {
+        text-align: center;
+        color: #777;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+    <header>
+      <div id="title">
+        <img src="images/barco1.png" alt="ícone de barco" />
+        <div class="headtitle">
+          <h1>Luxo</h1>
+          <h2>Aluguel de iates</h2>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="navmenu">
+          <li><a href="index.html">Página inicial</a></li>
+          <li><a href="aluguel.html">Aluguel de iates</a></li>
+          <li><a href="destinos.html">Destinos</a></li>
+          <li><a href="tripulacao.html">Tripulação</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="pagtitle">
+        <div class="bgtitle"></div>
+        <h2>Mensagens Recebidas</h2>
+      </div>
+
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Mensagem</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-mensagens">
+            
+          </tbody>
+        </table>
+      </div>
+
+      <div class="buttons">
+        <a href="admin.html" class="button" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;">Sair</a>
+      </div>
+    </main>
+    </div>
+
+    <footer>
+      <p>© 2023 por Luxo aluguel de iates</p>
+    </footer>
+
+   
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script src="js/api.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          
+          var listaMensagens = obterMensagens();
+
+          
+          var $corpoTabela = $('#tabela-mensagens');
+
+          
+          $corpoTabela.empty();
+
+          
+          if (listaMensagens && listaMensagens.length > 0) {
+              
+              
+              listaMensagens.forEach(function(item) {
+                  
+                  var linhaHTML = '<tr>' +
+                                      '<td>' + item.nome + '</td>' +
+                                      '<td>' + item.email + '</td>' +
+                                      '<td>' + item.mensagem + '</td>' +
+                                  '</tr>';
+                  
+                  
+                  $corpoTabela.append(linhaHTML);
+              });
+
+          } else {
+              
+              $corpoTabela.append('<tr><td colspan="3" class="no-messages">Nenhuma mensagem recebida até o momento.</td></tr>');
+          }
+      });
+    </script>
+  </body>
+</html>
